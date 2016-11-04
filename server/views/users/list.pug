@@ -1,0 +1,8 @@
+extends ../layout
+
+block content
+  h1 Users List
+  each user in users
+    li=user.name
+      a(href=`/users/edit/${user.id}`) [Edit]
+      a(href=`/users/remove/${user.id}`) [Remove]
