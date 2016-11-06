@@ -1,0 +1,12 @@
+extends ../layout
+
+block content
+  h1 Current Matches
+  each match in currentMatches
+    li=match.id
+      a(href=`/matches/continue/${match.id}`) [Continue]
+  h1 Matches List
+  each match in finishedMatches
+    li=match.id
+      a(href=`/matches/edit/${match.id}`) [Edit]
+      a(href=`/matches/remove/${match.id}`) [Remove]

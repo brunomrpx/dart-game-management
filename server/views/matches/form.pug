@@ -1,0 +1,22 @@
+extends ../layout
+
+block content
+  form(method="post" action='/matches/new' name="match")
+    fieldset
+      legend Match
+      p
+        label(for="category") Category:
+          select(name="category" id="category")
+            option(value="0") Individual
+            option(value="1") Duo
+      p
+        label(for="players") Players:
+        select(name="users" id="users-list" multiple)
+          option(value="0") Player 1
+          option(value="1") Player 2
+          option(value="1") Player 3
+        button(id="add-users") >
+        button(id="remove-users") <
+        select(name="players" id="players" multiple)
+      button(type="submit") Start
+  script(src='/javascripts/new-match.js')
