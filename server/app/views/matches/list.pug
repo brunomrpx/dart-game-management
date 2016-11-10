@@ -1,0 +1,19 @@
+extends ../layout
+
+block content
+  h1 Current Matches
+  if currentMatches.length > 0
+    each match in currentMatches
+      li Match - #{match.date}
+        a(href=`/matches/continue/${match._id}`) [Continue]
+        a(href=`/matches/delete/${match._id}`) [Delete]
+  else
+    p No results found
+  h1 Finished Matches
+  if finishedMatches.length > 0
+    each match in finishedMatches
+      li Match - #{match.date}
+        a(href=`/matches/edit/${match._id}`) [Edit]
+        a(href=`/matches/remove/${match._id}`) [Delete]
+  else
+    p No results found

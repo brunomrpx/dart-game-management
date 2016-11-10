@@ -12,9 +12,8 @@ block content
       p
         label(for="players") Players:
         select(name="users" id="users-list" multiple)
-          option(value="0") Player 1
-          option(value="1") Player 2
-          option(value="1") Player 3
+          each user in users
+            option(value=user.id) #{user.username}
         button(id="add-users") >
         button(id="remove-users") <
         select(name="players" id="players" multiple)
