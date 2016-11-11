@@ -43,7 +43,8 @@ let matchesService = {
 
 function formatData(matchData) {
   let defaultData = {
-    date: new Date(),
+    startDate: new Date(),
+    finishDate: null,
     finished: false,
   };
 

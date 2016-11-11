@@ -16,7 +16,7 @@ router.get('/', (req, res, next) => {
     let matchesType;
 
     matches.forEach(m => {
-      matchesType = m.finished ? 'finishedMatches' : 'currentMatches';
+      matchesType = m.finishDate ? 'finishedMatches' : 'currentMatches';
       parameters[matchesType].push(m);
     });
 

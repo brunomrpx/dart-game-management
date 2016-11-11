@@ -3,9 +3,9 @@
 const mongoose = require('mongoose');
 
 let MatchSchema = new mongoose.Schema({
-  date: Date,
+  startDate: Date,
+  finishDate: Date,
   category: Number,
-  finished: Boolean,
   players: [{
     data: {
       type: mongoose.Schema.Types.ObjectId,

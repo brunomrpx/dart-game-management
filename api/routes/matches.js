@@ -26,7 +26,7 @@ router.put('/:matchId/player/:playerId/moves', (req, res, next) => {
 router.post('/:id/finish', (req, res, next) => {
   let matchId = req.params.id;
   let postData = req.body;
-  let newData = { finished: true };
+  let newData = { finishDate: new Date() };
   let promises;
 
   promises = postData.players.map(p => {
