@@ -49,8 +49,6 @@ router.post('/new', (req, res, next) => {
 router.get('/delete/:id?', (req, res, next) => {
   let matchId = req.params.id;
 
-  console.log('deleting match: ', matchId);
-
   matchesService.delete(matchId).then(() => {
     res.redirect('/matches/');
   });
@@ -62,7 +60,6 @@ router.get('/continue/:id', (req, res, next) => {
 
   matchesService.getById(matchId).then(match => {
     parameters.match = match;
-    console.log('-> match: ', match);
     res.render('matches/continue', parameters);
   });
 });
