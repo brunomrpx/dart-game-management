@@ -6,12 +6,33 @@
 
   let allAddMovesButtonDOM = document.querySelectorAll('.add-moves');
   let allMovesDOM = document.querySelectorAll('.move');
-  let saveMatchButtonDOM = document.querySelector('.save-match')
+  let saveMatchButtonDOM = document.querySelector('.save-match');
+  let finishMatchButtonDOM = document.querySelector('.finish-match');
 
   // bind events
   bindMovesListEvents(allMovesDOM);
   bindAddMovesButton(allAddMovesButtonDOM);
   bindSaveMatchButton(saveMatchButtonDOM);
+  bindFinishMatchbutton(finishMatchButtonDOM);
+
+  function bindFinishMatchbutton(finishMatchButton) {
+    finishMatchButton.addEventListener('click', e => {
+      let parameters = {
+        method: 'POST',
+        headers: {
+          "Content-type": "application/json; charset=UTF=8"
+        }
+      };
+
+      let endpoint = '/api/matches/' + matchId + '/finish';
+
+      fetch(endpoint, parameters).then(response => {
+        return response.json();
+      }).then(jsonResult => {
+        location.href = '/matches';
+      });
+    });
+  }
 
   function bindSaveMatchButton(saveMatchButton) {
     saveMatchButton.addEventListener('click', e => {
@@ -29,8 +50,8 @@
         endpoint = '/api/matches/' + matchId + '/player/' + p.id + '/moves';
         parameters.body = JSON.stringify({ moves: p.moves });
 
-        fetch(endpoint, parameters).then(result => {
-          return result.json()
+        fetch(endpoint, parameters).then(response => {
+          return response.json()
         }).then(jsonResult => {
           console.log('-> jsonResult: ', jsonResult);
         });;

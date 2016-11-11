@@ -23,4 +23,13 @@ router.put('/:matchId/player/:playerId/moves', (req, res, next) => {
   });
 });
 
+router.post('/:id/finish', (req, res, next) => {
+  let matchId = req.params.id;
+  let newData = { finished: true };
+
+  matchesService.update(matchId, newData).then(m => {
+    res.json({ match: m });
+  });
+});
+
 module.exports = router;

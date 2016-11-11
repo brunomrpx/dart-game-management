@@ -24,6 +24,13 @@ let matchesService = {
     return Match.remove(query).exec();
   },
 
+  update: (id, newData) => {
+    let query = { _id: id };
+    let options = { new: true };
+
+    return Match.findOneAndUpdate(query, newData, options).exec();
+  },
+
   updateMoves: (matchId, playerId, moves) => {
     let query = { '_id': matchId, 'players.data': playerId };
     let operations = {
