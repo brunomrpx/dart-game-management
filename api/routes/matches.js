@@ -25,11 +25,19 @@ router.put('/:matchId/player/:playerId/moves', (req, res, next) => {
 
 router.post('/:id/finish', (req, res, next) => {
   let matchId = req.params.id;
+  let postData = req.body;
   let newData = { finished: true };
+  let promises;
 
-  matchesService.update(matchId, newData).then(m => {
-    res.json({ match: m });
+  promises = postData.players.map(p => {
+    return matchesService.updateMoves(matchId, p.id, p.moves);
   });
+
+  Promise.all(promises).then(() => {
+    matchesService.update(matchId, newData).then(m => {
+      res.json({ match: m });
+    });
+  })
 });
 
 module.exports = router;

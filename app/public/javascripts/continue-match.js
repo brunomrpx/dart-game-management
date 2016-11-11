@@ -17,11 +17,13 @@
 
   function bindFinishMatchbutton(finishMatchButton) {
     finishMatchButton.addEventListener('click', e => {
+      let players = getPlayersData();
       let parameters = {
         method: 'POST',
         headers: {
-          "Content-type": "application/json; charset=UTF=8"
-        }
+          "Content-type": "application/json; charset=UTF-8",
+        },
+        body: JSON.stringify({ players: players })
       };
 
       let endpoint = '/api/matches/' + matchId + '/finish';
