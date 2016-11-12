@@ -31,8 +31,10 @@
 
     addBatchEventListener(deleteButton, 'click', e => {
       let moves = searchParent(e.target, e => e.classList.contains('moves'));
+      let prevSibling = moves.previousSibling;
 
       moves.parentElement.removeChild(moves);
+      updatePlayerMatchFromMoves(prevSibling);
     });
   }
 
@@ -128,28 +130,32 @@
     }
 
     addBatchEventListener(movesList, 'keyup', e => {
-      let playerElement = searchParent(e.target, e => e.classList.contains('player'));
-      let allMoves = playerElement.querySelectorAll('.move');
-      let matchTotal = playerElement.querySelector('.match-total .value');
-
-      let movesContainer = searchParent(e.target, e => e.classList.contains('moves'));
-      let movesList = movesContainer.querySelectorAll('.move');
-      let moveTotal = movesContainer.querySelector('.move-total');
-
-      let moveTotalValue = 0;
-      let matchTotalValue = 0;
-
-      movesList.forEach(e => {
-        moveTotalValue += parseInt(e.value, 10) || 0;
-      });
-
-      allMoves.forEach(e => {
-        matchTotalValue += parseInt(e.value, 10) || 0;
-      });
-
-      moveTotal.textContent = '= ' + moveTotalValue;
-      matchTotal.textContent = 301 - matchTotalValue;
+      updatePlayerMatchFromMoves(e.target);
     });
+  }
+
+  function updatePlayerMatchFromMoves(moves) {
+    let playerElement = searchParent(moves, e => e.classList.contains('player'));
+    let allMoves = playerElement.querySelectorAll('.move');
+    let matchTotal = playerElement.querySelector('.match-total .value');
+
+    let movesContainer = searchParent(moves, e => e.classList.contains('moves'));
+    let movesList = movesContainer.querySelectorAll('.move');
+    let moveTotal = movesContainer.querySelector('.move-total');
+
+    let moveTotalValue = 0;
+    let matchTotalValue = 0;
+
+    movesList.forEach(e => {
+      moveTotalValue += parseInt(e.value, 10) || 0;
+    });
+
+    allMoves.forEach(e => {
+      matchTotalValue += parseInt(e.value, 10) || 0;
+    });
+
+    moveTotal.textContent = '= ' + moveTotalValue;
+    matchTotal.textContent = 301 - matchTotalValue;
   }
 
   function searchParent(startElement, conditionCallback) {
