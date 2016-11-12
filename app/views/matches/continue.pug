@@ -17,10 +17,12 @@ block content
       ul(data-player-id=player.data._id).player
         li
           p #{player.data.name} (#{player.data.username})
-          each move in player.moves
+          each move, i in player.moves
             - moveTotal = calcMoveTotal(move);
             - matchTotal += moveTotal;
             .moves
+              if (i !== 0)
+                button.delete-move Delete
               input(value=move.firstMove).move.first-move
               input(value=move.secondMove).move.second-move
               input(value=move.thirdMove).move.third-move

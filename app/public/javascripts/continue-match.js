@@ -8,12 +8,30 @@
   let allMovesDOM = document.querySelectorAll('.move');
   let saveMatchButtonDOM = document.querySelector('.save-match');
   let finishMatchButtonDOM = document.querySelector('.finish-match');
+  let deleteMoveButtonDOM = document.querySelectorAll('.delete-move');
 
   // bind events
   bindMovesListEvents(allMovesDOM);
   bindAddMovesButton(allAddMovesButtonDOM);
   bindSaveMatchButton(saveMatchButtonDOM);
   bindFinishMatchbutton(finishMatchButtonDOM);
+  bindDeleteMoveButton(deleteMoveButtonDOM);
+
+  function bindDeleteMoveButton(deleteButton) {
+    if (!deleteButton) {
+      return;
+    }
+
+    if (deleteButton instanceof HTMLElement) {
+        deleteButton = [deleteButton];
+    }
+
+    addBatchEventListener(deleteButton, 'click', e => {
+      let moves = searchParent(e.target, e => e.classList.contains('moves'));
+
+      moves.parentElement.removeChild(moves);
+    });
+  }
 
   function bindFinishMatchbutton(finishMatchButton) {
     finishMatchButton.addEventListener('click', e => {
@@ -146,6 +164,7 @@
     let lastMovesElement = movesList[movesList.length - 1];
 
     let newMovesTemplate = `
+      <button class="delete-move">Delete</button>
       <input class="move first-move"  value="0">
       <input class="move second-move" value="0">
       <input class="move third-move"  value="0">
@@ -155,14 +174,18 @@
     `;
 
     let newMovesElement = document.createElement('div');
+    let deleteMovesButton;
+
     newMovesElement.classList.add('moves');
     newMovesElement.innerHTML = newMovesTemplate;
+    deleteMovesButton = newMovesElement.querySelector('.delete-move');
 
     lastMovesElement.parentNode.insertBefore(
       newMovesElement, lastMovesElement.nextSibling
     );
 
     bindMovesListEvents(newMovesElement);
+    bindDeleteMoveButton(deleteMovesButton)
   }
 
   function addBatchEventListener(elements, eventName, callback) {
