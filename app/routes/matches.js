@@ -64,4 +64,14 @@ router.get('/continue/:id', (req, res, next) => {
   });
 });
 
+router.get('/edit/:id', (req, res, next) => {
+  let matchId = req.params.id;
+  let parameters = {};
+
+  matchesService.getById(matchId).then(match => {
+    parameters.match = match;
+    res.render('matches/edit', parameters);
+  });
+});
+
 module.exports = router;

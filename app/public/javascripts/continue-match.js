@@ -14,8 +14,11 @@
   bindMovesListEvents(allMovesDOM);
   bindAddMovesButton(allAddMovesButtonDOM);
   bindSaveMatchButton(saveMatchButtonDOM);
-  bindFinishMatchbutton(finishMatchButtonDOM);
   bindDeleteMoveButton(deleteMoveButtonDOM);
+
+  if (finishMatchButtonDOM) {
+    bindFinishMatchbutton(finishMatchButtonDOM);
+  }
 
   function bindDeleteMoveButton(deleteButton) {
     if (!deleteButton) {

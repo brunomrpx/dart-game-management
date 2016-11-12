@@ -1,0 +1,37 @@
+extends ../layout
+
+block content
+
+  - function calcMoveTotal(move) {
+  -  return move.firstMove + move.secondMove + move.thirdMove;
+  - }
+
+  h1 Continue
+  p
+    strong Start date
+    p=match.startDate
+    strong Finish date
+    p=match.finishDate
+  p
+    - var matchTotal, moveTotal;
+    each player in match.players
+      - matchTotal = moveTotal = 0;
+      ul(data-player-id=player.data._id).player
+        li
+          p #{player.data.name} (#{player.data.username})
+          each move, i in player.moves
+            - moveTotal = calcMoveTotal(move);
+            - matchTotal += moveTotal;
+            .moves
+              if (i !== 0)
+                button.delete-move Delete
+              input(value=move.firstMove).move.first-move
+              input(value=move.secondMove).move.second-move
+              input(value=move.thirdMove).move.third-move
+              span.move-total = #{moveTotal}
+          button.add-moves Add
+          .match-total
+            | total =
+            span.value #{301 - matchTotal}
+  button.save-match Save
+  script(src='/javascripts/continue-match.js')
