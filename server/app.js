@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const bluebird = require('bluebird');
+const cors = require('cors');
 
 const usersApi = require('./api/routes/users');
 const matchesApi = require('./api/routes/matches');
@@ -35,6 +36,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(require('less-middleware')(path.join(__dirname, 'app', 'public')));
 app.use(express.static(path.join(__dirname, 'app', 'public')));
+
+// cross domain
+app.use(cors())
 
 // app routes
 app.use('/', indexApp);
