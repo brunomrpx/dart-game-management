@@ -8,7 +8,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import App from './App';
-import Users from './components/Users';
+import Users, { NewUser } from './components/Users';
 import Matches from './components/Matches';
 
 import './index.css';
@@ -22,7 +22,10 @@ ReactDOM.render(
     <Router history={browserHistory}>
       <Route path='/' component={App}>
         <IndexRoute component={Users} />
-        <Route path='users' component={Users} />
+        <Route path='users'>
+          <IndexRoute component={Users} />
+          <Route path='new' component={NewUser} />
+        </Route>
         <Route path='matches' component={Matches} />
       </Route>
     </Router>
