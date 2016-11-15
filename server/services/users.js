@@ -19,8 +19,13 @@ let usersService = {
     return newUser.save();
   },
 
-  delete: (id) => {
-    let query = { _id: id };
+  delete: (ids) => {
+    let query = {
+      _id: {
+        $in: ids
+      }
+    };
+
     return User.remove(query).exec();
   },
 

@@ -35,11 +35,11 @@ router.post('/', (req, res, next) => {
   }).catch(handleError(next));
 });
 
-router.delete('/:id', (req, res, next) => {
-  let userId = req.params.id;
+router.delete('/:ids', (req, res, next) => {
+  let ids = req.params.ids.split(',');
 
-  usersService.delete(userId).then(() => {
-    res.json({ _id: userId });
+  usersService.delete(ids).then(() => {
+    res.json({ ids: ids });
   }).catch(handleError(next));
 });
 
