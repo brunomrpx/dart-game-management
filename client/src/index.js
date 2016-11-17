@@ -8,8 +8,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import App from './App';
-import Users, { NewUser } from './components/Users';
-import Matches from './components/Matches';
+import UsersListView from './modules/users/UsersListView';
+import UsersFormView from './modules/users/UsersFormView';
+import Matches from './modules/matches/Matches';
 
 import './index.css';
 
@@ -21,10 +22,11 @@ ReactDOM.render(
   <MuiThemeProvider>
     <Router history={browserHistory}>
       <Route path='/' component={App}>
-        <IndexRoute component={Users} />
+        <IndexRoute component={UsersListView} />
         <Route path='users'>
-          <IndexRoute component={Users} />
-          <Route path='new' component={NewUser} />
+          <IndexRoute component={UsersListView} />
+          <Route path='new' component={UsersFormView} />
+          <Route path='edit/:id' component={UsersFormView} />
         </Route>
         <Route path='matches' component={Matches} />
       </Route>
