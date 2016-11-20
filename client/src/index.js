@@ -10,7 +10,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import App from './App';
 import UsersListView from './modules/users/UsersListView';
 import UsersFormView from './modules/users/UsersFormView';
-import Matches from './modules/matches/Matches';
+import MatchesListView from './modules/matches/MatchesListView';
 
 import './index.css';
 
@@ -28,7 +28,7 @@ ReactDOM.render(
           <Route path='new' component={UsersFormView} />
           <Route path='edit/:id' component={UsersFormView} />
         </Route>
-        <Route path='matches' component={Matches} />
+        <Route path='matches' component={MatchesListView} />
       </Route>
     </Router>
   </MuiThemeProvider>,
