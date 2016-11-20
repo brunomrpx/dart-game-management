@@ -13,6 +13,12 @@ router.get('/:id', (req, res, next) => {
   });
 });
 
+router.get('/', (req, res, next) => {
+  matchesService.getAll().then(matches => {
+    res.json({ matches: matches });
+  });
+});
+
 router.put('/:matchId/player/:playerId/moves', (req, res, next) => {
   let matchId = req.params.matchId;
   let playerId = req.params.playerId;

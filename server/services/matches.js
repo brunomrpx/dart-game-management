@@ -11,7 +11,7 @@ let matchesService = {
   },
 
   getAll: () => {
-    return Match.find().lean().exec();
+    return Match.find().lean().populate('players.data').exec();
   },
 
   getById: (id) => {
