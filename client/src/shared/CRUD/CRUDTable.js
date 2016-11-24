@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
 
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-
-import { red500, blue500 } from 'material-ui/styles/colors';
-
-import ContentAdd from 'material-ui/svg-icons/content/add';
-import ContentRemove from 'material-ui/svg-icons/content/remove';
-import ContentCreate from 'material-ui/svg-icons/content/create';
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow} from 'material-ui/Table';
 import Snackbar from 'material-ui/Snackbar';
+
+import CRUDActionButtons from './CRUDActionButtons';
 
 class CRUDTable extends Component {
   constructor() {
@@ -66,10 +61,7 @@ class CRUDTable extends Component {
     .then(this.loadEntries)
     .then(() => {
       this.setState({
-        message: {
-          show: true,
-          text: 'Entries successfully removed'
-        }
+        message: { show: true, text: 'Entries successfully removed' }
       });
     });
   }
@@ -117,28 +109,11 @@ class CRUDTable extends Component {
 
   resetMessage() {
     this.setState({
-      message: {
-        show: false,
-        text: ''
-      }
+      message: { show: false, text: '' }
     });
   }
 
   render() {
-    const buttonsContainerStyle = {
-      margin: 0,
-      top: 'auto',
-      right: 20,
-      bottom: 20,
-      left: 'auto',
-      width: 56,
-      position: 'fixed',
-    };
-
-    const buttonStyle = {
-      marginTop: 15
-    }
-
     return (
       <div>
         <Snackbar
@@ -147,37 +122,27 @@ class CRUDTable extends Component {
           autoHideDuration={4000}
           onRequestClose={this.resetMessage}
         />
-        <div style={buttonsContainerStyle}>
-          <FloatingActionButton style={buttonStyle} onClick={ e => this.goToPage(`/${this.props.pluralName}/new`)}>
-            <ContentAdd />
-          </FloatingActionButton>
-          <FloatingActionButton style={buttonStyle} backgroundColor={red500} disabled={!this.state.canRemove} onClick={this.removeSelectedEntries}>
-            <ContentRemove />
-          </FloatingActionButton>
-          <FloatingActionButton style={buttonStyle} backgroundColor={blue500} disabled={!this.state.canEdit} onClick={ e => this.goToPage(`/${this.props.pluralName}/edit/${this.state.entries[this.state.selectedRows[0]]._id}`)}>
-            <ContentCreate />
-          </FloatingActionButton>
-        </div>
+        <CRUDActionButtons
+          canEdit={this.state.canEdit}
+          canRemove={this.state.canRemove}
+          onCLickEditButton={e => this.goToPage(`/${this.props.pluralName}/edit/${this.state.entries[this.state.selectedRows[0]]._id}`)}
+          onClickCreateButton={e => this.goToPage(`/${this.props.pluralName}/new`)}
+          onClickDeleteButton={this.removeSelectedEntries}
+          createAction={this.props.createAction}
+          deleteAction={this.props.deleteAction}
+          editAction={this.props.editAction}
+        />
         <Table multiSelectable={true} onRowSelection={this.handleRowSelection}>
           <TableHeader>
             <TableRow>
-              { this.props.headers.map((h, i) => {
+              {this.props.headers.map((h, i) => {
                 return <TableHeaderColumn key={i}>{h}</TableHeaderColumn>
               })}
             </TableRow>
           </TableHeader>
           <TableBody deselectOnClickaway={false}>
             {this.state.entries.map((entry, index) => {
-              return (
-                <TableRow key={index} selected={this.state.selectedRows.indexOf(index) !== -1}>
-                  <TableRowColumn>{entry.startDate}</TableRowColumn>
-                  <TableRowColumn>
-                    {entry.players.map((player, index) => {
-                      return <p key={index}>{player.data.name}</p>;
-                    })}
-                  </TableRowColumn>
-                </TableRow>
-              )
+              return this.props.onRenderTableRow(entry, index, this.state.selectedRows.indexOf(index) !== -1);
             })}
           </TableBody>
         </Table>
@@ -189,7 +154,11 @@ class CRUDTable extends Component {
 CRUDTable.defaultProps = {
   resource: null,
   pluralName: '',
-  headers: []
+  headers: [],
+  onRenderTableRow: null,
+  createAction: true,
+  deleteAction: true,
+  editAction: true
 };
 
 export default CRUDTable;

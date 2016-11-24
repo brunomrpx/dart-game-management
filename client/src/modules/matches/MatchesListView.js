@@ -1,24 +1,29 @@
 import React, { Component } from 'react';
-import { browserHistory } from 'react-router';
-
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-
-import { red500, blue500 } from 'material-ui/styles/colors';
-
-import ContentAdd from 'material-ui/svg-icons/content/add';
-import ContentRemove from 'material-ui/svg-icons/content/remove';
-import ContentCreate from 'material-ui/svg-icons/content/create';
-import Snackbar from 'material-ui/Snackbar';
+import {TableRow, TableRowColumn} from 'material-ui/Table';
 
 import MatchesResource from './MatchesResource';
-
-import CRUDTable from '../../shared/CRUDTable';
+import CRUDTable from '../../shared/CRUD/CRUDTable';
 
 class MatchesListView extends Component {
   render() {
     return (
-      <CRUDTable resource={MatchesResource} pluralName="matches" headers={['Start date', 'Players']} />
+      <CRUDTable
+        resource={MatchesResource}
+        pluralName="matches"
+        headers={['Start date', 'Players']}
+        onRenderTableRow={(match, index, selected) => {
+          return (
+            <TableRow key={index} selected={selected}>
+              <TableRowColumn>{match.startDate}</TableRowColumn>
+              <TableRowColumn>
+                {match.players.map((player, index) => {
+                  return <p key={index}>{player.data.name}</p>;
+                })}
+              </TableRowColumn>
+            </TableRow>
+          )
+        }}
+      />
     );
   }
 }

@@ -1,4 +1,4 @@
-import CRUDResource from '../../shared/CRUDResource';
+import CRUDResource from '../../shared/CRUD/CRUDResource';
 
 import { SERVER } from '../../shared/Constants';
 
