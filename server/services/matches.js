@@ -19,8 +19,13 @@ let matchesService = {
     return Match.findOne(query).lean().populate('players.data').exec();
   },
 
-  delete: (id) => {
-    let query = { _id: id };
+  delete: (ids) => {
+    let query = {
+      _id: {
+        $in: ids
+      }
+    };
+
     return Match.remove(query).exec();
   },
 

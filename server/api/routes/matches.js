@@ -29,6 +29,14 @@ router.put('/:matchId/player/:playerId/moves', (req, res, next) => {
   });
 });
 
+router.delete('/:ids', (req, res, next) => {
+  let ids = req.params.ids.split(',');
+
+  matchesService.delete(ids).then(() => {
+    res.json({ ids: ids });
+  });
+});
+
 router.post('/:id/finish', (req, res, next) => {
   let matchId = req.params.id;
   let postData = req.body;
